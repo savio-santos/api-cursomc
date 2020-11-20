@@ -10,7 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity(name = "categoria")
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity
 public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,9 +24,12 @@ public class Categoria implements Serializable {
 	
 	private String nome;
 	
+	@JsonManagedReference // trata a referencia cilica trazendo somente nessa classe os objetos associados de produtos 
+	
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
-	
+	//OBS: em produtos há outra anotação. 
+
 	public Categoria() {
 
 	}
