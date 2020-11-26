@@ -22,7 +22,7 @@ public class ClienteService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
-	public void persist(Cliente obj) {
+	public void insert(Cliente obj) {
 		clienteRepo.save(obj);
 
 	}

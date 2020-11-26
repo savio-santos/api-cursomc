@@ -27,7 +27,7 @@ public class ClienteResource {
 	 }
 
 	 @GetMapping("/{id}")
-	 public ResponseEntity<Cliente> buscar(@PathVariable Integer id) {
+	 public ResponseEntity<Cliente> find(@PathVariable Integer id) {
 
 			Optional<Cliente> obj = Optional.of(clienteService.find(id));
 
