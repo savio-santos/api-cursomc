@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,39 +22,41 @@ import br.com.savio.cursomc.services.CategoriaService;
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
-	
+
 	@Autowired
 	CategoriaService categoriaService;
-	
 
-	
 	@GetMapping
-	 public List<Categoria> listar() {
-		 return categoriaService.findAll();
-	 }
+	public List<Categoria> listar() {
+		return categoriaService.findAll();
+	}
 
-	 @GetMapping("/{id}")
-	 public ResponseEntity<Categoria> buscar(@PathVariable Integer id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> buscar(@PathVariable Integer id) {
 
-			Optional<Categoria> obj = Optional.of(categoriaService.find(id));
+		Optional<Categoria> obj = Optional.of(categoriaService.find(id));
 
-				return ResponseEntity.ok(obj.get());
-	 }
-	 @PostMapping
-	 public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
-		 obj = categoriaService.insert(obj);
-		 URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-			.path("/{id}").buildAndExpand(obj.getId()).toUri(); 
-			return ResponseEntity.created(uri).build(); //pradrao rest que retorna o caminho do obj criado
-	 }
-	
-	 @PutMapping("/{id}")
-	 public ResponseEntity<Void> update(@PathVariable Integer id,@RequestBody Categoria obj) {
+		return ResponseEntity.ok(obj.get());
+	}
+
+	@PostMapping
+	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+		obj = categoriaService.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build(); // boas praticas rest para retornar o caminho do obj criado
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj) {
 		obj.setId(id);
 		obj = categoriaService.update(obj);
 		return ResponseEntity.noContent().build();
-	 }
-	 
-	 
-	 
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Categoria> delete(@PathVariable Integer id) {
+		categoriaService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
