@@ -3,6 +3,7 @@ package br.com.savio.cursomc.resources;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.savio.cursomc.domain.Categoria;
+import br.com.savio.cursomc.dto.CategoriaDTO;
 import br.com.savio.cursomc.services.CategoriaService;
 
 @RestController
@@ -27,8 +29,10 @@ public class CategoriaResource {
 	CategoriaService categoriaService;
 
 	@GetMapping
-	public List<Categoria> listar() {
-		return categoriaService.findAll();
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<CategoriaDTO> list = categoriaService.findAll().stream()
+		.map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list); 
 	}
 
 	@GetMapping("/{id}")
