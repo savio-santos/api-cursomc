@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,7 @@ public class CategoriaResource {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Categoria> buscar(@PathVariable Integer id) {
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 
 		Optional<Categoria> obj = Optional.of(categoriaService.find(id));
 
@@ -46,14 +48,16 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+		Categoria obj = categoriaService.fromDTO(objDto);
 		obj = categoriaService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build(); // boas praticas rest para retornar o caminho do obj criado
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria obj) {
+	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody @Valid CategoriaDTO objDto) {
+		Categoria obj = categoriaService.fromDTO(objDto);
 		obj.setId(id);
 		obj = categoriaService.update(obj);
 		return ResponseEntity.noContent().build();
