@@ -48,4 +48,18 @@ public class ResouceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 
 	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<StandardError> ExceptionError(Exception e,
+			HttpServletRequest request) {
+
+		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(),e.getMessage(),
+				System.currentTimeMillis());
+		
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+
+	}
+	
+	
 }

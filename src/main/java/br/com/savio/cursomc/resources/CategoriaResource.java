@@ -32,19 +32,19 @@ public class CategoriaResource {
 	@Autowired
 	CategoriaService categoriaService;
 
-	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<CategoriaDTO> list = categoriaService.findAll().stream().map(obj -> new CategoriaDTO(obj))
-				.collect(Collectors.toList());
-		return ResponseEntity.ok().body(list);
-	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 
 		Optional<Categoria> obj = Optional.of(categoriaService.find(id));
 
 		return ResponseEntity.ok(obj.get());
+	}
+
+	@GetMapping
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<CategoriaDTO> list = categoriaService.findAll().stream().map(obj -> new CategoriaDTO(obj))
+				.collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
 	}
 
 	@PostMapping
@@ -70,12 +70,11 @@ public class CategoriaResource {
 	}
 
 	@GetMapping("/page")
-	public ResponseEntity<Page<CategoriaDTO>> findPage(
-			@RequestParam(value = "page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<CategoriaDTO>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		
+
 		Page<Categoria> pageList = categoriaService.findPage(page, linesPerPage, orderBy, direction);
 		Page<CategoriaDTO> listDTO = pageList.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
