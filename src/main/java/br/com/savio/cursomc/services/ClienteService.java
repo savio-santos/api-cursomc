@@ -67,7 +67,7 @@ public class ClienteService {
 
 		} catch (DataIntegrityViolationException e) {
 			throw new MyDataIntegrityViolationException(
-					"Não é póssivel excluir ppois estqa entidade possui associaçoes.");
+					"Não é póssivel excluir clientes que possuem pedidos.");
 		}
 	}
 
