@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.savio.cursomc.domain.Cliente;
 import br.com.savio.cursomc.dto.ClienteDTO;
+import br.com.savio.cursomc.dto.ClienteNewDTO;
 import br.com.savio.cursomc.services.ClienteService;
 
 @RestController
@@ -48,12 +49,14 @@ public class ClienteResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
 		Cliente obj = clienteService.fromDTO(objDto);
 		obj = clienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build(); // boas praticas rest para retornar o caminho do obj criado
+		return ResponseEntity.created(uri).build(); 
 	}
+	
+	
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO objDto) {
@@ -80,4 +83,6 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
+	
+	
 }
