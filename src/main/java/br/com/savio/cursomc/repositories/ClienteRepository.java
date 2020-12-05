@@ -8,4 +8,7 @@ import br.com.savio.cursomc.domain.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 
+	
+	Cliente findByEmail(String email);
+	
 }

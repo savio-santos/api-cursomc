@@ -3,7 +3,7 @@ package br.com.savio.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -98,5 +98,11 @@ public class ClienteService {
 		return cli;
 
 	}
+	
+	@Transactional(readOnly=true)
+	public Cliente findByEmail(String email) {
+		return clienteRepository.findByEmail(email);
+		
+	} 
 
 }
