@@ -3,14 +3,13 @@ package br.com.savio.cursomc.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.savio.cursomc.domain.Cidade;
 import br.com.savio.cursomc.domain.Cliente;
@@ -99,7 +98,6 @@ public class ClienteService {
 
 	}
 	
-	@Transactional(readOnly=true)
 	public Cliente findByEmail(String email) {
 		return clienteRepository.findByEmail(email);
 		
