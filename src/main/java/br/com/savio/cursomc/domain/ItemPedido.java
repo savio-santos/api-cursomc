@@ -37,15 +37,23 @@ public class ItemPedido implements Serializable {
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+
 	
-	
-	public Double getSubtotal() {
-		return (preco - desconto) * quantidade;
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
 	}
-	
-	
+
 	public Produto getProduto() {
 		return id.getProduto();
+	}
+
+	
+	public void setProduto(Produto produto) {
+		id.setProduto(produto);
+	}
+
+	public Double getSubtotal() {
+		return (preco - desconto) * quantidade;
 	}
 
 	public ItemPedidoPK getId() {
@@ -105,5 +113,4 @@ public class ItemPedido implements Serializable {
 		return true;
 	}
 
-	
 }
