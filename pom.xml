@@ -12,6 +12,8 @@
 	<groupId>br.com.savio.cursomc</groupId>
 	<artifactId>cursomc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	
 	<name>cursomc</name>
 	<description>Demo project for Spring Boot</description>
 
