@@ -1,8 +1,11 @@
 package br.com.savio.cursomc.services;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,32 +36,40 @@ public class PedidoService {
 
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
-
+	
+	@Autowired
+	private ClienteService clienteService;
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
+	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
+		Calendar cal = Calendar.getInstance();
+		
 		obj.setInstante(new Date());
-		obj.getPagamento().setEstado(EstadoPagamento.PENDETE);
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
+		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
 			PagamentoComBoleto pgto = (PagamentoComBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoComBoleto(pgto, obj.getInstante());
 		}
-		pedidoRepository.save(obj);
+		obj=pedidoRepository.save(obj);
 		pgtoRepository.save(obj.getPagamento());
 
-		for (ItemPedido item : obj.getItens()) {
-			item.setDesconto(0d);
-			item.setPreco(produtoService.find(item.getProduto().getId()).getPreco());
-			item.setPedido(obj);
+		for (ItemPedido ip : obj.getItens()) {
+			ip.setDesconto(0.0);
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
+			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 

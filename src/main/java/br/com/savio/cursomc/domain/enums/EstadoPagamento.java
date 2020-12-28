@@ -2,9 +2,9 @@ package br.com.savio.cursomc.domain.enums;
 
 public enum EstadoPagamento {
 
-	PENDETE(1, "Pessoa Física"),
-	CANCELADO(1, "Pessoa Física"),
-	QUITADO(2, "Pessoa Juridica");
+	PENDENTE(1, "PENDENTE"),
+	CANCELADO(1, "CANCELADO"),
+	QUITADO(2, "QUITADO");
 
 	private int cod;
 	private String descricao;
