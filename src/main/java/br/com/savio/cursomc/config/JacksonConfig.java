@@ -12,6 +12,7 @@ import br.com.savio.cursomc.domain.PagamentoComCartao;
 @Configuration
 public class JacksonConfig {
 	// https://stackoverflow.com/questions/41452598/overcome-can-not-construct-instance-ofinterfaceclass-without-hinting-the-pare
+	
 	/*classe de configuração para estanciar as subclasses de PAGAMENTO*/
 	
 	@Bean

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.savio.cursomc.services.DBService;
+import br.com.savio.cursomc.services.EmailService;
+import br.com.savio.cursomc.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -30,4 +32,10 @@ public class DevConfig {
 		
 		return true;
 	}
+	
+	@Bean// disponibiliza como um componente do sistema para injeçoes de dependecia
+	public EmailService emailService() {
+		return new SmtpEmailService(); 
+	}
 }
+
