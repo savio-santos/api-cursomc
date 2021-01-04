@@ -1,6 +1,5 @@
 package br.com.savio.cursomc.services;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,14 +35,13 @@ public class PedidoService {
 
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
-	
+
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = pedidoRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -53,8 +51,7 @@ public class PedidoService {
 	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
-		Calendar cal = Calendar.getInstance();
-		
+
 		obj.setInstante(new Date());
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
@@ -64,7 +61,7 @@ public class PedidoService {
 			PagamentoComBoleto pgto = (PagamentoComBoleto) obj.getPagamento();
 			boletoService.preencherPagamentoComBoleto(pgto, obj.getInstante());
 		}
-		obj=pedidoRepository.save(obj);
+		obj = pedidoRepository.save(obj);
 		pgtoRepository.save(obj.getPagamento());
 
 		for (ItemPedido ip : obj.getItens()) {
@@ -74,7 +71,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
 
