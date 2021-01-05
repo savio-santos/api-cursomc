@@ -1,15 +1,14 @@
 package br.com.savio.cursomc.domain.enums;
 
-public enum EstadoPagamento {
+public enum Perfil {
 
-	PENDENTE(1, "PENDENTE"),
-	QUITADO(2, "QUITADO"),
-	CANCELADO(2, "CANCELADO");
-	
+	ADMIN(1, "ROLE_ADMIN"), 
+	CLIENTE(2, "ROLE_CLIENTE");
+
 	private int cod;
 	private String descricao;
 
-	private EstadoPagamento(int cod, String desc) {
+	private Perfil(int cod, String desc) {
 		this.cod = cod;
 		this.descricao = desc;
 
@@ -23,15 +22,15 @@ public enum EstadoPagamento {
 		return descricao;
 	}
 
-	public static EstadoPagamento toEnum(Integer cod) {
+	public static Perfil toEnum(Integer cod) {
 		if (cod.equals(null))
 			return null;
-		for (EstadoPagamento x : EstadoPagamento.values()) {
+		for (Perfil x : Perfil.values()) {
 			if (cod.equals(x.getCod()))
 				return x;
 		}
-		
-		throw new IllegalArgumentException("Id Invalido"+cod);
+
+		throw new IllegalArgumentException("Id Invalido" + cod);
 	}
 
 }
