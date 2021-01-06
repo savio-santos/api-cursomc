@@ -50,7 +50,7 @@ public class JWTUtil {
 	}
 
 	public String getUsername(String token) {
-		Claims clains = getClaims(token); //clains= Reivindicações
+		Claims clains = getClaims(token); // obj do JWT armazena as Reivindicações do tokens
 		if (clains != null) {
 			return clains.getSubject();
 		}
