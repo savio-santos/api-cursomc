@@ -58,7 +58,6 @@ public class ClienteResource {
 		return ResponseEntity.created(uri).build(); 
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO objDto) {
 		Cliente obj = clienteService.fromDTO(objDto);
