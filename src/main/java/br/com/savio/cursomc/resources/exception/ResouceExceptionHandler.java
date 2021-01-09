@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import br.com.savio.cursomc.services.exceptions.AuthorizationException;
 import br.com.savio.cursomc.services.exceptions.MyDataIntegrityViolationException;
 import br.com.savio.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -26,7 +27,7 @@ public class ResouceExceptionHandler {
 	}
 
 	@ExceptionHandler(MyDataIntegrityViolationException.class)
-	public ResponseEntity<StandardError> DataIntegrityViolation(MyDataIntegrityViolationException e,
+	public ResponseEntity<StandardError> dataIntegrityViolation(MyDataIntegrityViolationException e,
 			HttpServletRequest request) {
 
 		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
@@ -34,32 +35,37 @@ public class ResouceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 
 	}
-	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e,
-			HttpServletRequest request) {
 
-		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(),"Erro de Validação",
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+
+		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de Validação",
 				System.currentTimeMillis());
-		for(FieldError x : e.getBindingResult().getFieldErrors()) {
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
 			err.AddError(x.getField(), x.getDefaultMessage());
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 
 	}
-	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<StandardError> ExceptionError(Exception e,
-			HttpServletRequest request) {
 
-		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(),e.getMessage(),
-				System.currentTimeMillis());
-		
-		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorizationError(AuthorizationException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 
 	}
-	
-	
+
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<StandardError> exceptionError(Exception e, HttpServletRequest request) {
+//
+//		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+//				System.currentTimeMillis());
+//
+//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+//
+//	}
+
 }

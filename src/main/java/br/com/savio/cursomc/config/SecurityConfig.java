@@ -29,7 +29,7 @@ import br.com.savio.cursomc.security.JWTUtil;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService; //userDetailsService retorna um estancia de userDetailsServiceImpl 
 
 	@Autowired
 	private Environment env;
@@ -65,6 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+		 
 	}
 
 	@Bean

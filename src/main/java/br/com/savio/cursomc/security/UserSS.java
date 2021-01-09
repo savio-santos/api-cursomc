@@ -10,6 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.savio.cursomc.domain.enums.Perfil;
 
+/*UserDetails - interface de contrados utilizado pelo Spring Security para 
+ * trabalhar com usuarios
+ * 
+ * UserSS - classe que atende aos contrados do Spring Security 
+ * */
+
 public class UserSS implements UserDetails {
 
 	private static final long serialVersionUID = 1L;

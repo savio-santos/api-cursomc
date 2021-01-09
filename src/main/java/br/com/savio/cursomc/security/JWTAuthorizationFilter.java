@@ -13,6 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+/*
+ * Classe responsavel por verificar se o token é valido
+ * */
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -31,6 +34,11 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+		/*
+		 * método que intercepta a request do usuario e verifica se o mesmo tem
+		 * permissão acessar o recurso através do token enviado no cabeçalho
+		 * 
+		 */
 
 		String header = request.getHeader("Authorization");
 
@@ -43,7 +51,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		chain.doFilter(request, response);
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthentication( String token) {
+	private UsernamePasswordAuthenticationToken getAuthentication(String token) {
 		if (jwtUtil.tokenValido(token)) {
 			String username = jwtUtil.getUsername(token);
 			UserDetails user = userDetailsService.loadUserByUsername(username);

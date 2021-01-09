@@ -30,7 +30,6 @@ import br.com.savio.cursomc.services.ClienteService;
 @RequestMapping(value = "/clientes")
 public class ClienteResource {
 
-
 	@Autowired
 	ClienteService clienteService;
 
@@ -55,9 +54,9 @@ public class ClienteResource {
 		Cliente obj = clienteService.fromDTO(objDto);
 		obj = clienteService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build(); 
+		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody @Valid ClienteDTO objDto) {
 		Cliente obj = clienteService.fromDTO(objDto);
@@ -85,6 +84,4 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	
-	
 }

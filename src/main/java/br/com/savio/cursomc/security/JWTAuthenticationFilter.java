@@ -20,8 +20,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.savio.cursomc.dto.CredenciaisDTO;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+/*filtro que intecepta a request de login do usuario e retorna um token em caso de sucesso ou uma sms de erro caso ocorra.      
+ * 
+ * "/login" url padrão do spring security  
+ * */
 
+
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+	
 	private AuthenticationManager authenticationManager;
 
 	private JWTUtil jwtUtil;
