@@ -31,10 +31,9 @@ public class ProdutoResource {
 
 		return ResponseEntity.ok(obj.get());
 	}
-	
+
 	@GetMapping()
-	public ResponseEntity<Page<ProdutoDTO>> findPage(
-			@RequestParam(value = "nome", defaultValue = "") String nome,
+	public ResponseEntity<Page<ProdutoDTO>> findPage(@RequestParam(value = "nome", defaultValue = "") String nome,
 			@RequestParam(value = "categorias", defaultValue = "") String categorias,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
@@ -43,12 +42,10 @@ public class ProdutoResource {
 
 		String nomeDecoded = URL.decodeParam(nome);
 		List<Integer> ids = URL.decodeIntList(categorias);
-		Page<Produto> list = produtoService.search(nomeDecoded,ids,page, linesPerPage, orderBy, direction);
+		Page<Produto> list = produtoService.searchByNomeAndCategoria(nomeDecoded, ids, page, linesPerPage, orderBy,
+				direction);
 		Page<ProdutoDTO> listDTO = list.map(obj -> new ProdutoDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
-
-	
-	
 
 }
