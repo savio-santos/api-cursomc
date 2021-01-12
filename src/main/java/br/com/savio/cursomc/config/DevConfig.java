@@ -15,27 +15,26 @@ import br.com.savio.cursomc.services.SmtpEmailService;
 @Configuration
 @Profile("dev")
 public class DevConfig {
-	
+
 	@Autowired
 	private DBService dbService;
-	
+
 	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
-	
+
 	@Bean
 	public boolean instantiateDatebase() throws ParseException {
-		if(!"create".equals(strategy)) {
+		if (!"create".equals(strategy)) {
 			return false;
 		}
 
-			dbService.instantiateTestDatabase();
-		
+		dbService.instantiateTestDatabase();
+
 		return true;
 	}
-	
-	@Bean// disponibiliza como um componente do sistema para injeçoes de dependecia
+
+	@Bean // disponibiliza como um componente do sistema para injeçoes de dependecia
 	public EmailService emailService() {
-		return new SmtpEmailService(); 
+		return new SmtpEmailService();
 	}
 }
-
