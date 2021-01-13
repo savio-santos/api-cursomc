@@ -48,23 +48,13 @@ public class Cliente implements Serializable {
 	private Set<String> telefones = new HashSet<>();
 	// Set= conjunto que não aceita repetição
 
-	@ElementCollection(fetch = FetchType.EAGER)//garante que o perfil seja buscado junto com o cliente
+	@ElementCollection(fetch = FetchType.EAGER) // garante que o perfil seja buscado junto com o cliente
 	@CollectionTable(name = "perfis")
 	private Set<Integer> perfis = new HashSet<>();
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
-	
-	private String imageUrl;
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
 
 	public Cliente() {
 		addPerfil(Perfil.CLIENTE);
