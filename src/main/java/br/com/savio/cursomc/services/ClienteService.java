@@ -129,8 +129,20 @@ public class ClienteService {
 	}
 
 	public Cliente findByEmail(String email) {
-		return clienteRepository.findByEmail(email);
+		UserSS user = UserService.authenticated();
 
+		if (user == null || user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername()) ) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Cliente cli = clienteRepository.findByEmail(email);
+		
+		if(cli == null)
+			throw new ObjectNotFoundException(
+					"Cliente não encontrado para Email: " + email );
+		
+		return cli;
+		
 	}
 
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
