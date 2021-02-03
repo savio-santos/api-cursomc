@@ -72,12 +72,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				AuthenticationException exception) throws IOException, ServletException {
 			response.setStatus(401);
 			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
 			response.getWriter().append(json());
 		}
 
 		private String json() {
 			long date = new Date().getTime();
-			return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Não autorizado\", "
+			return "{\"timestamp\": " + date + ", " + "\"status\": 401, " + "\"error\": \"Access Denied\", "
 					+ "\"message\": \"Email ou senha inválidos\", " + "\"path\": \"/login\"}";
 		}
 	}
