@@ -67,12 +67,12 @@ public class DBService {
 
 	public void instantiateTestDatabase() throws ParseException {
 
-		Categoria cat1 = new Categoria(null, "informatica");
-		Categoria cat2 = new Categoria(null, "escritorio");
-		Categoria cat3 = new Categoria(null, "cama mesa e banho");
+		Categoria cat1 = new Categoria(null, "Informatica");
+		Categoria cat2 = new Categoria(null, "Escritorio");
+		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
 		Categoria cat4 = new Categoria(null, "Eletrônicos");
 		Categoria cat5 = new Categoria(null, "Jardinagem");
-		Categoria cat6 = new Categoria(null, "Decoracao");
+		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 
 		Produto p1 = new Produto(null, "Computador", 2000.00);
