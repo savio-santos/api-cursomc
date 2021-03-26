@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.savio.cursomc.domain.Cliente;
 import br.com.savio.cursomc.domain.enums.TipoCliente;
 import br.com.savio.cursomc.dto.ClienteNewDTO;
+import br.com.savio.cursomc.repositories.ClienteRepository;
 import br.com.savio.cursomc.resources.exception.FieldMessage;
-import br.com.savio.cursomc.services.ClienteService;
 import br.com.savio.cursomc.services.validation.utils.BR;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
 	
 	@Autowired
-	ClienteService service;
+	ClienteRepository repo;
 	
 	@Override
 	public void initialize(ClienteInsert ann) {
@@ -31,13 +31,13 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 // inclua os testes aqui, inserindo erros na lista
 
 		if(objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod())&& !BR.isValidCPF(objDto.getCpfOuCnpj()))
-	list.add(new FieldMessage("cpfOuCnpj","CPF Invalido"));
+			list.add(new FieldMessage("cpfOuCnpj","CPF Invalido"));
 
-if(objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod())&& !BR.isValidCNPJ(objDto.getCpfOuCnpj()))
-	list.add(new FieldMessage("cpfOuCnpj","CNPJ Invalido"));
+		if(objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod())&& !BR.isValidCNPJ(objDto.getCpfOuCnpj()))
+			list.add(new FieldMessage("cpfOuCnpj","CNPJ Invalido"));
 
 		
-Cliente aux = service.findByEmail(objDto.getEmail()); 
+Cliente aux = repo.findByEmail(objDto.getEmail()); 
 	if(aux != null)
 		list.add(new FieldMessage("Email","Este email já existe"));
 

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -56,29 +55,19 @@ public class ResouceExceptionHandler {
 			err.AddError(x.getField(), x.getDefaultMessage());
 		}
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 
 	}
 
 	@ExceptionHandler(AuthorizationException.class)
 	public ResponseEntity<StandardError> authorizationError(AuthorizationException e, HttpServletRequest request) {
 
-		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(),
-				"Authorization Error", e.getMessage(), request.getRequestURI());
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Access Danied",
+				e.getMessage(), request.getRequestURI());
 
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 
 	}
-
-//	@ExceptionHandler(AccessDeniedException.class)
-//	public ResponseEntity<StandardError> accessDeniedException(AccessDeniedException e, HttpServletRequest request) {
-//
-//		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(),
-//				"accessDeniedException", e.getMessage(), request.getRequestURI());
-//
-//		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
-//
-//	}
 
 	@ExceptionHandler(FileException.class)
 	public ResponseEntity<StandardError> fileException(FileException e, HttpServletRequest request) {
@@ -119,14 +108,14 @@ public class ResouceExceptionHandler {
 
 	}
 
-//	@ExceptionHandler(Exception.class)
-//	public ResponseEntity<StandardError> exceptionError(Exception e, HttpServletRequest request) {
-//
-//		StandardError err = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
-//				System.currentTimeMillis());
-//
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
-//
-//	}
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<StandardError> exceptionError(Exception e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"AmazonS3Exception", e.getMessage(), request.getRequestURI());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+
+	}
 
 }

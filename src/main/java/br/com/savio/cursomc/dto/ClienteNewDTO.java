@@ -9,7 +9,8 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.savio.cursomc.services.validation.ClienteInsert;
 
-@ClienteInsert // anotaçao customizada
+// anotaçao customizada
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
