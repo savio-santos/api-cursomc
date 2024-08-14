@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.4</version>
+		<version>2.5.15</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -111,19 +111,13 @@
 			<version>4.2</version>
 		</dependency>
 		
-		<!-- SWAGGER DOCUMENTACAO -->
+		<!-- SWAGGER DOCUMENTACAO API-->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
+		 <groupId>io.springfox</groupId>
+		 <artifactId>springfox-boot-starter</artifactId>
+		 <version>3.0.0</version>
 		</dependency>	
 		
-
 	</dependencies>
 
 	<build>

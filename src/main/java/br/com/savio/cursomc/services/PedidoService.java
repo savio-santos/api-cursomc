@@ -91,7 +91,7 @@ public class PedidoService {
 			throw new AuthorizationException("Acesso negado");
 		}
 		Cliente cliente = clienteService.find(user.getId());
-		return pedidoRepository.findByCliente(cliente);
+		return pedidoRepository.findByClienteList(cliente.getId());
 	}
 
 	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {

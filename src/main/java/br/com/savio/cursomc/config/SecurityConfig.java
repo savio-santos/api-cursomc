@@ -45,11 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes",	"/auth/forgot/**" };
 	
 	
-	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	 web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", 
-	"/swagger-ui.html", "/webjars/**");
+	 web.ignoring().antMatchers("/swagger-ui/**","/v2/api-docs", "/configuration/ui", 
+	"/swagger-resources/**", "/configuration/**", "/webjars/**");
 	}
 
 	@Override
